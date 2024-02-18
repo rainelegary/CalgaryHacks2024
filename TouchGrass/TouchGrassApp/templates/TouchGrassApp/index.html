@@ -50,7 +50,8 @@
                 if (distance <= radius) {
                     filteredFacilities.push({
                         position: {lat: {{ facility.latitude }}, lng: {{ facility.longitude }}},
-                        title: '{{ facility.name }}'
+                        title: '{{ facility.name }}',
+                        content: '<h3>{{ facility.name }}</h3><p>Other information about the facility goes here...</p>'
                     });
                 }
             {% endfor %}
@@ -84,12 +85,19 @@
                         // Clear existing markers
                         clearMarkers();
                         // Add new markers
-                        newMarkers.forEach(function(marker) {
-                            markers.push(new google.maps.Marker({
-                                position: marker.position,
+                        newMarkers.forEach(function(markerInfo) {
+                            var marker = new google.maps.Marker({
+                                position: markerInfo.position,
                                 map: map,
-                                title: marker.title
-                            }));
+                                title: markerInfo.title
+                            });
+                            marker.addListener('click', function() {
+                                var infoWindow = new google.maps.InfoWindow({
+                                    content: markerInfo.content
+                                });
+                                infoWindow.open(map, marker);
+                            });
+                            markers.push(marker);
                         });
                     }
     
@@ -109,6 +117,7 @@
             markers = [];
         }
     </script>
+    
     
     
     
