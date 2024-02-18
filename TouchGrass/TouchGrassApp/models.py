@@ -75,4 +75,9 @@ class Facility(models.Model):
     profit_op = models.BooleanField(default=False)
     private_op = models.BooleanField(default=False)
 
+class Activity(models.Model):
+    name = models.CharField(max_length=255)
+    facilities = models.ManyToManyField(Facility, related_name='activities')
 
+    def __str__(self):
+        return self.name
