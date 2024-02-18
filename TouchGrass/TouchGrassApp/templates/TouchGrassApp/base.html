@@ -18,19 +18,16 @@
     <!-- Bigger description text -->
     <div class="text-lg mb-8">Embark on an adventure of your choice</div>
 
-    <!-- Input text field with styling -->
-    <input type="text" class="p-4 border border-gray-300 rounded mb-4 w-64 focus:outline-none focus:ring focus:border-green-500 bg-white text-gray-800" placeholder="Enter something...">
+    <!-- Form to submit user input -->
+    <form method="post" action="{% url 'index' %}">
+        {% csrf_token %}
+        <!-- Input text field with styling -->
+        <input type="text" name="user_input" class="p-4 border border-gray-300 rounded mb-4 w-64 focus:outline-none focus:ring focus:border-green-500 bg-white text-gray-800" placeholder="Enter something...">
+        <!-- Submit button with styling and logic -->
+        <button type="submit" id="submitButton" class="p-3 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring focus:border-green-500 text-white rounded-full cursor-pointer transition duration-300 ease-in-out">Let's Go!</button>
+    </form>
 
-    <!-- Submit button with styling and logic -->
-    <button id="submitButton" class="p-3 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring focus:border-green-500 text-white rounded-full cursor-pointer transition duration-300 ease-in-out">Let's Go!</button>
 
-    <!-- Include JavaScript to handle the button click -->
-    <script>
-        document.getElementById("submitButton").addEventListener("click", function () {
-            // Redirect to the next page
-            window.location.href = "pagetwo";
-        });
-    </script>
 </body>
 
 </html>

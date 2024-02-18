@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ParsedCSV',
         'USER': 'root',
-        'PASSWORD': '12345',
+        'PASSWORD': '#maFington266',
         'HOST': 'localhost',
         'PORT': '3306',
     }
