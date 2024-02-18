@@ -20,35 +20,36 @@ def index(request):
    print( {'facilities': facilities})
    return render(request, 'TouchGrassApp/index.html', {'facilities': facilities})
 
-# def index(request):
-#     if request.method == 'POST':
-#         user_input = request.POST.get('user_input', '')  # Get user input from the form
-#         openai_response = generate_response(user_input)  # Get response from OpenAI
-#         print(openai_response)
-#         activities = openai_response.split(',')  # Split the response into activities
+def index(request):
+    if request.method == 'POST':
+        user_input = request.POST.get('user_input', '')  # Get user input from the form
+        openai_response = generate_response(user_input)  # Get response from OpenAI
+        print(openai_response)
+        activities = openai_response.split(',')  # Split the response into activities
 
-#         # Initialize an empty list to store facility IDs
-#         facility_ids = []
+        # Initialize an empty list to store facility IDs
+        facility_ids = []
 
-#         # Query facilities based on activities
-#         for activity_name in activities:
-#             try:
-#                 # Query the Activity model to get the activity object by name
-#                 activity = Activity.objects.get(name=activity_name.strip())
-#                 # Retrieve the related facility IDs for the current activity
-#                 facility_ids.extend(activity.facilities.values_list('id', flat=True))
-#             except Activity.DoesNotExist:
-#                 # Handle the case where the activity does not exist
-#                 pass
+        # Query facilities based on activities
+        for activity_id in activities:
+            try:
+                # Query the Activity model to get the activity object by ID
+                activity = Activity.objects.get(id=int(activity_id.strip()))
+                # Retrieve the related facility IDs for the current activity
+                facility_ids.extend(activity.facilities.values_list('id', flat=True))
+            except (Activity.DoesNotExist, ValueError):
+                # Handle the case where the activity does not exist or the ID is invalid
+                pass
 
-#         # Filter facilities based on the collected facility IDs
-#         filtered_facilities = Facility.objects.filter(id__in=facility_ids).distinct()
-#         print(filtered_facilities)
-#         # Pass the filtered facilities to the template
-#         context = {'facilities': filtered_facilities}
-#         return render(request, 'TouchGrassApp/index.html', context)
-#     else:
-#         return render(request, 'TouchGrassApp/index.html')  # Render the index page if not a POST request
+        # Filter facilities based on the collected facility IDs
+        filtered_facilities = Facility.objects.filter(id__in=facility_ids).distinct()
+
+        print(filtered_facilities)
+        # Pass the filtered facilities to the template
+        context = {'facilities': filtered_facilities}
+        return render(request, 'TouchGrassApp/index.html', context)
+    else:
+        return render(request, 'TouchGrassApp/index.html')  # Render the index page if not a POST request
 
 
 def generate_response(user_input):
