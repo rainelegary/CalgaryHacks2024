@@ -19,13 +19,23 @@
     
     <script>
         function initMap() {
-            // Create a map object and specify the DOM element for display.
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 51.049999, lng: -114.066666},
-                zoom: 8
+                zoom: 20
             });
+    
+            // Loop through facility locations and create markers
+            {% for facility in facilities %}
+                var facilityLatLng = new google.maps.LatLng({{ facility.latitude }}, {{ facility.longitude }});
+                var marker = new google.maps.Marker({
+                    position: facilityLatLng,
+                    map: map,
+                    title: '{{ facility.name }}'  // You can use facility name or any other relevant information as the marker title
+                });
+            {% endfor %}
         }
     </script>
+    
     <!-- Replace YOUR_API_KEY with your actual API key -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFuZUPDe_m1Pn8lEkUOkX0_G4emaSBsWU&callback=initMap" async defer></script>
 </body>
