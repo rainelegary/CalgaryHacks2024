@@ -5,6 +5,8 @@ class Facility(models.Model):
     facility_type = models.CharField(max_length=100)
     tier = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
+    longitude = models.DecimalField(max_digits=25, decimal_places=20)  # Adjust precision as needed
+    latitude = models.DecimalField(max_digits=25, decimal_places=20)  # Adjust precision as needed
     org = models.CharField(max_length=100)
     typ_of_org = models.CharField(max_length=100)
     steward = models.CharField(max_length=100)

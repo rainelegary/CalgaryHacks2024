@@ -21,6 +21,8 @@ def import_csv_data(file_path):
                 facility_type=row['FACILITY_TYPE'],
                 tier=row['TIER'],
                 address=row['ADDRESS'],
+                longitude=row['LONGITUDE'],
+                latitude=row['LATITUDE'],
                 org=row['ORG'],
                 typ_of_org=row['TYP_OF_ORG'],
                 steward=row['STEWARD'],
@@ -91,5 +93,5 @@ def import_csv_data(file_path):
             )
 
 if __name__ == "__main__":
-    csv_file_path = 'Recreation_Facilities.csv'  # Provide the path to your CSV file
+    csv_file_path = 'Recreation_Facilities_Long_Lat.csv'  # Provide the path to your CSV file
     import_csv_data(csv_file_path)
