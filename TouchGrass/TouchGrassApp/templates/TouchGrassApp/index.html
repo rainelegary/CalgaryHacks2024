@@ -58,38 +58,47 @@
         }
     
         function initMap() {
-            var center = {lat: 51.049999, lng: -114.066666};
-            var radiusInput = document.getElementById('radius');
-            var radius = parseInt(radiusInput.value); // Initial radius value
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var center = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var radiusInput = document.getElementById('radius');
+                    var radius = parseInt(radiusInput.value); // Initial radius value
     
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: center,
-                zoom: 8
-            });
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: center,
+                        zoom: 8
+                    });
     
-            // Update markers when slider value changes
-            radiusInput.addEventListener('input', function() {
-                radius = parseInt(radiusInput.value);
-                updateMarkers();
-            });
+                    // Update markers when slider value changes
+                    radiusInput.addEventListener('input', function() {
+                        radius = parseInt(radiusInput.value);
+                        updateMarkers();
+                    });
     
-            // Function to update markers based on radius
-            function updateMarkers() {
-                var newMarkers = filterMarkers(center, radius);
-                // Clear existing markers
-                clearMarkers();
-                // Add new markers
-                newMarkers.forEach(function(marker) {
-                    markers.push(new google.maps.Marker({
-                        position: marker.position,
-                        map: map,
-                        title: marker.title
-                    }));
+                    // Function to update markers based on radius
+                    function updateMarkers() {
+                        var newMarkers = filterMarkers(center, radius);
+                        // Clear existing markers
+                        clearMarkers();
+                        // Add new markers
+                        newMarkers.forEach(function(marker) {
+                            markers.push(new google.maps.Marker({
+                                position: marker.position,
+                                map: map,
+                                title: marker.title
+                            }));
+                        });
+                    }
+    
+                    // Initial markers
+                    updateMarkers();
                 });
+            } else {
+                alert('Geolocation is not supported by this browser.');
             }
-    
-            // Initial markers
-            updateMarkers();
         }
     
         // Function to clear markers from the map
@@ -100,6 +109,7 @@
             markers = [];
         }
     </script>
+    
     
     
     
