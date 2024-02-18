@@ -15,10 +15,10 @@ def map_view(request):
     }
     return render(request, 'TouchGrassApp/index.html', context)
 
-def index(request):
-   facilities = Facility.objects.all()
-   print( {'facilities': facilities})
-   return render(request, 'TouchGrassApp/index.html', {'facilities': facilities})
+# def index(request):
+#    facilities = Facility.objects.all()
+#    print( {'facilities': facilities})
+#    return render(request, 'TouchGrassApp/index.html', {'facilities': facilities})
 
 def index(request):
     if request.method == 'POST':
