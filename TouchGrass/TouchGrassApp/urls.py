@@ -1,8 +1,13 @@
 # TouchGrass/TouchGrassApp/urls.py
 
 from django.urls import path
-from .views import index
+from . import views
+#from .views import homescreen
+
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('pagetwo', views.index, name='index'),
+    path('', views.homescreen, name='homescreen'),
+    #path('homescreen/', homescreen, name='homescreen'),
+
 ]
