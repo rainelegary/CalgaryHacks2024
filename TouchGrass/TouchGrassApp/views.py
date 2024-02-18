@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .models import Facility
 
 
+def homescreen(request):
+    return render(request, 'TouchGrassApp/base.html')
+
 def index(request):
     return render(request, 'TouchGrassApp/index.html')
 
@@ -11,3 +14,4 @@ def map_view(request):
         'facilities': facilities
     }
     return render(request, 'TouchGrassApp/index.html', context)
+
