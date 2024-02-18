@@ -17,24 +17,90 @@
     <h1>My Map</h1>
     <div id="map"></div>
     
+    <!-- Slider for radius -->
+    <label for="radius">Radius (km): </label>
+    <input type="range" min="1" max="10" value="5" id="radius">
+    
     <script>
+        var map;
+        var markers = [];
+    
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2 - lat1);  // deg2rad below
+            var dLon = deg2rad(lon2 - lon1);
+            var a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2)
+                ;
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c; // Distance in km
+            return d;
+        }
+    
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180)
+        }
+    
+        function filterMarkers(center, radius) {
+            var filteredFacilities = [];
+            {% for facility in facilities %}
+                var distance = calculateDistance(center.lat, center.lng, {{ facility.latitude }}, {{ facility.longitude }});
+                if (distance <= radius) {
+                    filteredFacilities.push({
+                        position: {lat: {{ facility.latitude }}, lng: {{ facility.longitude }}},
+                        title: '{{ facility.name }}'
+                    });
+                }
+            {% endfor %}
+            return filteredFacilities;
+        }
+    
         function initMap() {
-            // Create a map object and specify the DOM element for display.
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 51.049999, lng: -114.066666},
-                zoom: 12
+            var center = {lat: 51.049999, lng: -114.066666};
+            var radiusInput = document.getElementById('radius');
+            var radius = parseInt(radiusInput.value); // Initial radius value
+    
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: center,
+                zoom: 8
             });
-
-            // Add markers for each facility
-        {% for facility in facilities %}
-            var marker = new google.maps.Marker({
-                position: {lat: {{ facility.latitude }}, lng: {{ facility.longitude }}},
-                map: map,
-                title: '{{ facility.name }}'
+    
+            // Update markers when slider value changes
+            radiusInput.addEventListener('input', function() {
+                radius = parseInt(radiusInput.value);
+                updateMarkers();
             });
-        {% endfor %}
+    
+            // Function to update markers based on radius
+            function updateMarkers() {
+                var newMarkers = filterMarkers(center, radius);
+                // Clear existing markers
+                clearMarkers();
+                // Add new markers
+                newMarkers.forEach(function(marker) {
+                    markers.push(new google.maps.Marker({
+                        position: marker.position,
+                        map: map,
+                        title: marker.title
+                    }));
+                });
+            }
+    
+            // Initial markers
+            updateMarkers();
+        }
+    
+        // Function to clear markers from the map
+        function clearMarkers() {
+            markers.forEach(function(marker) {
+                marker.setMap(null);
+            });
+            markers = [];
         }
     </script>
+    
     
     
     <!-- Replace YOUR_API_KEY with your actual API key -->
