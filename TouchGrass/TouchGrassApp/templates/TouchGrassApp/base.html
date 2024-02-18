@@ -11,18 +11,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap">
 </head>
 
-<body class="flex flex-col items-center justify-center h-screen bg-green-200 text-black">
+<body class="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-green-300 to-green-500 text-white">
     <!-- Bigger and nicer "Touch Grass" text -->
-    <div class="text-6xl font-semibold mb-4 font-montserrat">Touch Grass</div>
+    <div class="text-6xl font-semibold mb-4 font-montserrat tracking-wider">Touch Grass</div>
 
     <!-- Bigger description text -->
-    <div class="text-lg mb-8">Enter an exciting activity you'd like to do</div>
+    <div class="text-lg mb-8">Embark on an adventure of your choice</div>
 
     <!-- Input text field with styling -->
-    <input type="text" class="p-2 border border-gray-300 rounded mb-4 w-64" placeholder="Enter something...">
+    <input type="text" class="p-4 border border-gray-300 rounded mb-4 w-64 focus:outline-none focus:ring focus:border-green-500 bg-white text-gray-800" placeholder="Enter something...">
 
     <!-- Submit button with styling and logic -->
-    <button id="submitButton" class="p-2 bg-green-500 text-white rounded cursor-pointer">Submit</button>
+    <button id="submitButton" class="p-3 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring focus:border-green-500 text-white rounded-full cursor-pointer transition duration-300 ease-in-out">Let's Go!</button>
 
     <!-- Include JavaScript to handle the button click -->
     <script>
