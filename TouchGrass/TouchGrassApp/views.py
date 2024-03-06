@@ -53,7 +53,7 @@ def index(request):
 
 
 def generate_response(user_input):
-    openai.api_key = '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'
+    openai.api_key = ''
 
     prompt = "1:Ice Skating, 2:Curling, 3:Weightlifting, 4:Indoor Swimming, 5:Wave Pool, 6:Hot Tub, 7:Climbing Wall, 8:Indoor Track, 9:Outdoor Wading Pool, 10:Indoor Sports, 11:Indoor Racquetball, 12:Steam Room, 13:Diamond Facility, 14:Diving Tank, 15:Springboard Diving, 16:Outdoor Field, 17:Teaching Pool, 18:Spray Park, 19:Outdoor Swimming, 20:Other Pool, 21:Platform Diving, 22:Indoor Wading Pool, 23:Golf, 24:Golf Course, 25:Driving Range, 26:Nordic Skiing, 27:Outdoor Track, 28:Rope Swing, 29:Gymnastics. \n According to this list, map the following to comma seperated integers, based on user input. The goal is to map them to the activity based on their input. It can be general."
 
